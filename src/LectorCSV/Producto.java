@@ -14,10 +14,7 @@ public class Producto {
     }
 
     public void mostrarProducto() {
-        System.out.println("\tID: " + id);
-        System.out.println("\tProducto: " + producto);
-        System.out.println("\tPrecio: " + precio);
-        System.out.println("\tStock: " + stock);
+        System.out.println(this.toString());
     }
 
     public int getId() {
@@ -25,6 +22,10 @@ public class Producto {
     }
 
     public void setId(int id) {
+        if (id <= 0) {
+            throw new IllegalArgumentException("El ID debe ser un número positivo.");
+        }
+
         this.id = id;
     }
 
@@ -33,6 +34,9 @@ public class Producto {
     }
 
     public void setProducto(String producto) {
+        if (producto == null || producto.trim().isEmpty()) {
+            throw new IllegalArgumentException("El nombre del producto no puede estar vacío.");
+        }
         this.producto = producto;
     }
 
@@ -41,6 +45,9 @@ public class Producto {
     }
 
     public void setPrecio(double precio) {
+        if (precio < 0) {
+            throw new IllegalArgumentException("El precio no puede ser un número negativo.");
+        }
         this.precio = precio;
     }
 
@@ -49,6 +56,13 @@ public class Producto {
     }
 
     public void setStock(int stock) {
+        if (stock < 0) {
+            throw new IllegalArgumentException("El stock no puede ser un número negativo.");
+        }
         this.stock = stock;
+    }
+
+    public String toString() {
+        return "Producto{id=" + id + ", producto='" + producto + "', precio=" + precio + ", stock=" + stock + "}";
     }
 }

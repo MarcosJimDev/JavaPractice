@@ -45,8 +45,8 @@ public class EjemploLecturaCSV {
                                 if (nuevo != null)
                                     productos.add(nuevo);
                                 contProductos++;
-                            } catch (Exception e) {
-                                System.err.println("ERROR: línea " + cont + " no procesada. Asegúrate de que el forma se cumpla.");
+                            } catch (IllegalArgumentException e) {
+                                System.err.println("Error en datos: " + e.getMessage());
                             }
                         }
                         cont++;
@@ -165,15 +165,20 @@ public class EjemploLecturaCSV {
     }
 
     private static Producto convertirLineaAProducto(String linea) {
-        String[] lineaSeparada = linea.split(",");
-        if (lineaSeparada != null && lineaSeparada.length == 4) {
-            int id = Integer.parseInt(lineaSeparada[0].trim());
-            String producto = lineaSeparada[1].trim();
-            double precio = Double.parseDouble(lineaSeparada[2].trim());
-            int stock = Integer.parseInt(lineaSeparada[3].trim());
-            return new Producto(id, producto, precio, stock);
-        } else {
-            return null;
+        String[] partes = linea.split(",");
+
+        if (partes.length != 4) {
+            throw new IllegalArgumentException("La línea no tiene 4 partes: " + linea);
+        }
+
+        try {
+            int id = Integer.parseInt(partes[0].trim());
+            String nombre = partes[1].trim();
+            double precio = Double.parseDouble(partes[2].trim());
+            int stock = Integer.parseInt(partes[3].trim());
+            return new Producto(id, nombre, precio, stock);
+        } catch (NumberFormatException e) {
+            throw new IllegalArgumentException("Error al convertir los números en la línea: " + linea, e);
         }
     }
 }
