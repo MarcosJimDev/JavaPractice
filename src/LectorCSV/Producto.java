@@ -14,7 +14,10 @@ public class Producto {
     }
 
     public void mostrarProducto() {
-        System.out.println(this.toString());
+        System.out.println("\tID: " + id);
+        System.out.println("\tProducto: " + producto);
+        System.out.println("\tPrecio: " + precio);
+        System.out.println("\tStock: " + stock);
     }
 
     public int getId() {
@@ -60,9 +63,5 @@ public class Producto {
             throw new IllegalArgumentException("El stock no puede ser un número negativo.");
         }
         this.stock = stock;
-    }
-
-    public String toString() {
-        return "Producto{id=" + id + ", producto='" + producto + "', precio=" + precio + ", stock=" + stock + "}";
     }
 }
